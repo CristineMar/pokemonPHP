@@ -16,11 +16,12 @@
     <form>
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label for="inputNumber">Email</label>
-            <input type="number" name="numero" class="form-control" id="inputNumber" placeholder="Numero">
+            <label for="inputNumber">Numero</label>
+            <input type="number" maxlength="3" autofocus min="0" name="numero" class="form-control" id="inputNumber" placeholder="Introduzca un numero" aria-describedby="numberHelp">
+            <div id="numberHelp" class="form-text">Introduzca un numero</div>
           </div>
           <div class="form-group col-md-6">
-            <label for="name">Numero</label>
+            <label for="name">Nombre</label>
             <input type="text" name="name" class="form-control" id="name" placeholder="Introduzca el nombre del pokemon">
           </div>
         </div>
@@ -40,7 +41,7 @@
           <div class="form-group col-md-8">
             <label class="form-check-label">Tipo</label>
             <div class="form-check form-check-inline">
-                <input type="checkbox" class="form-check-input" id="type">
+                <input type="checkbox" class="form-check-input" id="type" checked>
                 <label class="form-check-label" for="type" name="type">Planta</label>
             </div>
             <div class="form-check form-check-inline">
@@ -94,31 +95,32 @@
           </div>
 
           <div class="form-group">
+          <label class="form-check-label"> Evolución </label>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" id="evolution" name="evolution">
+              <input class="form-check-input" type="radio" id="evolution" name="evolution" checked>
               <label class="form-check-label" for="evolution">
                 Sense evolució
               </label>
             </div>
 
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="evolution" name="evolution">
+                <input class="form-check-input" type="radio" id="evolution" name="evolution">
               <label class="form-check-label" for="evolution">
                     Primera evolución
                 </label>
               </div>
 
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="evolution" name="evolution">
+                <input class="form-check-input" type="radio" id="evolution" name="evolution">
               <label class="form-check-label" for="evolution">
                     Otras evoluciones
                 </label>
               </div>
           </div>
 
-          <div class="form-group">
-            <label for="image">Imagen</label>
-            <input type="file" class="form-control-file" id="image" name="image">
+          <div class="form-group col-md-6">
+            <label for="image" class="form-label">Imagen</label>
+            <input class="form-control" type="file" id="image" name="image">
           </div>
 
         <input type="submit" value="Aceptar">
