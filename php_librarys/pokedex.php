@@ -1,7 +1,7 @@
 <?php
 
-$pokedex = [];
-$pokemon = [];
+//$pokedex = [];
+//$pokemon = [];
 /* $number = $_POST['number'];
 $name = $_POST['name'];
 $region = $_POST['region'];
@@ -14,12 +14,13 @@ $image = $_POST['image']; */
 $number;
 $name;
 $region;
-$type; //this will be changed to array remember to modify
+$type = [];
 $height;
 $weight;
 $evolution;
 $image;
 
+// to create a pokemon
 function createPokemon($number, $name, $region, $type, $height, $weight, $evolution, $image)
 {
     $pokemon = [
@@ -36,12 +37,19 @@ function createPokemon($number, $name, $region, $type, $height, $weight, $evolut
     return $pokemon;
 }
 
+// to show all pokemon that has been created
 function showPokemon($pokemon)
 {
     echo 'Numero: ' . $pokemon['number'] . '<br>';
     echo 'Nombre: ' . $pokemon['name'] . '<br>';
     echo 'Region: ' . $pokemon['region'] . '<br>';
-    echo 'Tipo: ' . $pokemon['type'] . '<br>';
+
+    $type = '';
+    for ($i=0; $i < count($pokemon['type']); $i++) { 
+        $type .= $pokemon['type'][$i] . ' ';
+    }  
+
+    echo 'Tipo: ' . $type . '<br>';
     echo 'Altura: ' . $pokemon['height'] . '<br>';
     echo 'Peso: ' . $pokemon['weight'] . '<br>';
     echo 'Evolución: ' . $pokemon['evolution'] . '<br>';
@@ -49,11 +57,17 @@ function showPokemon($pokemon)
     echo '<br>';
 }
 
+// to add pokemon in pokedex
 function addPokemon(&$pokedex, $pokemon)
 {
-    array_push($pokedex, $pokemon);
+    $itExist = searchPokemonByNum($pokedex, $pokemon['number']);
+
+    if ($itExist == -1) {
+        array_push($pokedex, $pokemon);
+    }
 }
 
+// to show all contents of pokedex
 function showPokedex($pokedex)
 {
     $totalPokedex = count($pokedex);
@@ -61,21 +75,25 @@ function showPokedex($pokedex)
     for ($i = 0; $i < $totalPokedex; $i++) {
         showPokemon($pokedex[$i]);
     }
-}
-
-function deletePokemon(&$pokedex, $number)
-{
-    $index = searchPokemonByNum($pokedex, $number);
-    if ($index > 0) {
-        unset($pokedex[$index]);
-        $pokedex = array_values($pokedex); 
-        echo "Eliminado correctamente";
-    } else {
-        echo "No existe este pokemon por lo tanto no se puede eliminar";
-    }
     
 }
 
+// this will delete pokemon by number
+function deletePokemonNum(&$pokedex, $value){
+
+    $isItDeleted = false;
+    $index = searchPokemonByNum($pokedex, $value);
+
+    if ($index > 0) {
+        unset($pokedex[$index]);
+        $isItDeleted = true;
+        $pokedex = array_values($pokedex);
+    }
+
+    return $isItDeleted;
+}
+
+//search pokemon by number
 function searchPokemonByNum($pokedex, $number)
 {
 
@@ -86,17 +104,16 @@ function searchPokemonByNum($pokedex, $number)
 
     while ($index < $totalPokedex && !$ifFound) {
         if ($pokedex[$index]['number'] === $number) {
-            $ifFound = true;
             $notFound = $index;
-            echo "index". $notFound;
+            $ifFound = true;
         } else {
             $index++;
         }
     }
-
     return $notFound;
 }
 
+// this function will modify pokemon
 function modifyPokemon(&$pokedex, $number, $name, $region, $type, $height, $weight, $evolution, $image)
 {
     $totalPokedex = count($pokedex);
@@ -119,21 +136,5 @@ function modifyPokemon(&$pokedex, $number, $name, $region, $type, $height, $weig
         }
     }
 }
-
-$pokemon = createPokemon(001, "Bulbasaur", "Hoen", "Planta, Veneno", 70, 6.9, "Sense evolucionar", "001.png");
-//showPokemon($pokemon);
-addPokemon($pokedex, $pokemon);
-
-$pokemon = createPokemon(002, "Ivysaur", "Hoen", "Planta, Veneno", 100, 13, "Primera evolució", "002.png");
-//showPokemon($pokemon);
-addPokemon($pokedex, $pokemon);
-
-$pokemon = createPokemon(004, "Charmander", "Jotho", "Fuego", 60, 8.5, "Sense evolucionar", "003.png");
-//showPokemon($pokemon);
-addPokemon($pokedex, $pokemon);
-
-showPokedex($pokedex);
-deletePokemon($pokedex, 2);
-showPokedex($pokedex);
 
 ?>
