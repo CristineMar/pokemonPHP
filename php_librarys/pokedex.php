@@ -1,16 +1,8 @@
 <?php
 
-//$pokedex = [];
-//$pokemon = [];
-/* $number = $_POST['number'];
-$name = $_POST['name'];
-$region = $_POST['region'];
-$type = $_POST['type'];
-$height = $_POST['height'];
-$weight = $_POST['weight'];
-$evolution = $_POST['evolution'];
-$image = $_POST['image']; */
+session_start();
 
+$pokedex = [];
 $number;
 $name;
 $region;
@@ -23,6 +15,7 @@ $image;
 // to create a pokemon
 function createPokemon($number, $name, $region, $type, $height, $weight, $evolution, $image)
 {
+
     $pokemon = [
         'number' => $number,
         'name' => $name,
@@ -44,12 +37,17 @@ function showPokemon($pokemon)
     echo 'Nombre: ' . $pokemon['name'] . '<br>';
     echo 'Region: ' . $pokemon['region'] . '<br>';
 
-    $type = '';
+/*     $type = '';
     for ($i=0; $i < count($pokemon['type']); $i++) { 
         $type .= $pokemon['type'][$i] . ' ';
-    }  
+    }
+ */
+    foreach ($pokemon['type'] as $type) {
+        echo 'Tipo: ' . $type . '<br>';
+    }
 
-    echo 'Tipo: ' . $type . '<br>';
+
+    //echo 'Tipo: ' . $type . '<br>';
     echo 'Altura: ' . $pokemon['height'] . '<br>';
     echo 'Peso: ' . $pokemon['weight'] . '<br>';
     echo 'Evolución: ' . $pokemon['evolution'] . '<br>';
@@ -64,6 +62,10 @@ function addPokemon(&$pokedex, $pokemon)
 
     if ($itExist == -1) {
         array_push($pokedex, $pokemon);
+        $_SESSION['sessionCorrect']  = "Pokemon añadido correctamente";
+        //$_SESSION['pokedex'] = $pokedex;
+    } else {
+        $_SESSION['sessionError']  = "Error";
     }
 }
 
@@ -84,10 +86,13 @@ function deletePokemonNum(&$pokedex, $value){
     $isItDeleted = false;
     $index = searchPokemonByNum($pokedex, $value);
 
-    if ($index > 0) {
+    if ($index >= 0) {
         unset($pokedex[$index]);
         $isItDeleted = true;
         $pokedex = array_values($pokedex);
+        $_SESSION['sessionCorrect']  = "Pokemon borrado correctamente";
+    } else {
+        $_SESSION['sessionError']  = "Error";
     }
 
     return $isItDeleted;

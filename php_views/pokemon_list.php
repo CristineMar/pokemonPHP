@@ -15,277 +15,67 @@
 <body>
 
     <?php
-    include __DIR__ . "../../php_partials/menu.php"
+    session_start();
+    include __DIR__ . "../../php_partials/menu.php";
     ?>
 
     <div class="container-fluid pb-3">
 
+        <?php
+        if (isset($_SESSION["sessionCorrect"])) {
+            echo '<div class="alert alert-success" role="alert">' . $_SESSION["sessionCorrect"] . '</div>';
+            unset($_SESSION["sessionCorrect"]);
+        } else  if (isset($_SESSION["sessionError"])) {
+            echo '<div class="alert alert-danger" role="alert">' . $_SESSION["sessionError"] . '</div>';
+            unset($_SESSION["sessionError"]);
+        }
+        ?>
+
+
         <div class="row row-cols-lg-5 row-cols-md-5 row-cols-5 row-cols-sm-1 g-4">
-            <div class="col">
-                <div class="card h-100 border border-secondary p-0 m-2">
-                    <img src="../media/pokemon/001.png" class="card-img-top img-fluid" alt="...">
-                    <div class="card-body">
-                        <p class="card-text fw-bold">001 - Bulbasaur</p>
+            <?php
+            if (isset($_SESSION["pokedex"])) {
+                $pokedex = $_SESSION['pokedex'];
 
-                        <span class="badge bg-warning text-dark">Planta</span>
-                        <span class="badge bg-warning text-dark">Veneno</span>
-                    </div>
+                if (is_array($pokedex) || is_object($pokedex)) {
+                    foreach ($pokedex as $pokemon) {
+
+                        echo ' <div class="col">
+                <div class="card h-100 border border-secondary p-0 m-2">
+                    <img src="' . $pokemon['image'] . '" class="card-img-top img-fluid" alt="...">
+                    <div class="card-body">
+                        <p class="card-text fw-bold">00' . $pokemon['number'] . '-' . $pokemon['name'] . '</p>';
+                        for ($i = 0; $i < count($pokemon['type']); $i++) {
+                            echo '<span class="badge bg-warning text-dark">' . $pokemon['type'][$i] . '</span>';
+                        }
+                        echo '</div>
 
                     <div class="card-footer d-grid gap-2 d-md-flex d-sm-flex justify-content-md-end justify-content-sm-end">
 
-                        <form action="#">
-                            <input id="inputHidden" name="inputHidden" type="hidden" value="I'm hidden">
-                            <button type="submit" class="btn btn-outline-danger">
+                        <form action="../php_controllers/pokemonController.php" method="post">
+                            <input id="inputHidden" name="inputHidden" type="hidden" value="' . $pokemon['number'] . '">
+                            <button type="submit" name="delete" class="btn btn-outline-danger">
                                 <i class="far fa-trash-alt"></i>
                             </button>
                         </form>
 
-                        <form action="#">
-                            <input id="inputHidden" name="inputHidden" type="hidden" value="I'm hidden">
-                            <button type="submit" class="btn btn-outline-primary">
+                        <form action="../php_controllers/pokemonController.php" method="post">
+                            <input id="inputHidden" name="inputHidden" type="hidden" value="' . $pokemon['number'] . '">
+                            <button type="submit" name="edit" class="btn btn-outline-primary">
                                 <i class="far fa-edit"></i>
                             </button>
                         </form>
 
                     </div>
                 </div>
-
-            </div>
-
-            <div class="col">
-                <div class="card h-100 border border-secondary p-0 m-2">
-                    <img src="../media/pokemon/002.png" class="card-img-top img-fluid" alt="...">
-                    <div class="card-body">
-                        <p class="card-text fw-bold">002 - Ivysaur</p>
-
-                        <span class="badge bg-warning text-dark">Planta</span>
-                        <span class="badge bg-warning text-dark">Veneno</span>
-                    </div>
-
-                    <div class="card-footer d-grid gap-2 d-md-flex d-sm-flex justify-content-md-end justify-content-sm-end">
-
-                        <form action="#">
-                            <input id="inputHidden" name="inputHidden" type="hidden" value="I'm hidden">
-                            <button type="submit" class="btn btn-outline-danger">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                        </form>
-
-                        <form action="#">
-                            <input id="inputHidden" name="inputHidden" type="hidden" value="I'm hidden">
-                            <button type="submit" class="btn btn-outline-primary">
-                                <i class="far fa-edit"></i>
-                            </button>
-                        </form>
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card h-100 border border-secondary p-0 m-2">
-                    <img src="../media/pokemon/003.png" class="card-img-top img-fluid" alt="...">
-                    <div class="card-body">
-                        <p class="card-text fw-bold">003 - Venusaur</p>
-
-                        <span class="badge bg-warning text-dark">Planta</span>
-                        <span class="badge bg-warning text-dark">Veneno</span>
-                    </div>
-
-                    <div class="card-footer d-grid gap-2 d-md-flex d-sm-flex justify-content-md-end justify-content-sm-end">
-
-                        <form action="#">
-                            <input id="inputHidden" name="inputHidden" type="hidden" value="I'm hidden">
-                            <button type="submit" class="btn btn-outline-danger">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                        </form>
-
-                        <form action="#">
-                            <input id="inputHidden" name="inputHidden" type="hidden" value="I'm hidden">
-                            <button type="submit" class="btn btn-outline-primary">
-                                <i class="far fa-edit"></i>
-                            </button>
-                        </form>
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card h-100 border border-secondary p-0 m-2">
-                    <img src="../media/pokemon/004.png" class="card-img-top img-fluid" alt="...">
-                    <div class="card-body">
-                        <p class="card-text fw-bold">004 - Charmander</p>
-
-                        <span class="badge bg-warning text-dark">fuego</span>
-                    </div>
-
-                    <div class="card-footer d-grid gap-2 d-md-flex d-sm-flex justify-content-md-end justify-content-sm-end">
-
-                        <form action="#">
-                            <input id="inputHidden" name="inputHidden" type="hidden" value="I'm hidden">
-                            <button type="submit" class="btn btn-outline-danger">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                        </form>
-
-                        <form action="#">
-                            <input id="inputHidden" name="inputHidden" type="hidden" value="I'm hidden">
-                            <button type="submit" class="btn btn-outline-primary">
-                                <i class="far fa-edit"></i>
-                            </button>
-                        </form>
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card h-100 border border-secondary p-0 m-2">
-                    <img src="../media/pokemon/005.png" class="card-img-top img-fluid" alt="...">
-                    <div class="card-body">
-                        <p class="card-text fw-bold">005 - Charmaleon</p>
-
-                        <span class="badge bg-warning text-dark">fuego</span>
-                    </div>
-
-                    <div class="card-footer d-grid gap-2 d-md-flex d-sm-flex justify-content-md-end justify-content-sm-end">
-
-                        <form action="#">
-                            <input id="inputHidden" name="inputHidden" type="hidden" value="I'm hidden">
-                            <button type="submit" class="btn btn-outline-danger">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                        </form>
-
-                        <form action="#">
-                            <input id="inputHidden" name="inputHidden" type="hidden" value="I'm hidden">
-                            <button type="submit" class="btn btn-outline-primary">
-                                <i class="far fa-edit"></i>
-                            </button>
-                        </form>
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card h-100 border border-secondary p-0 m-2">
-                    <img src="../media/pokemon/006.png" class="card-img-top img-fluid" alt="...">
-                    <div class="card-body">
-                        <p class="card-text fw-bold">006 - Charizard</p>
-
-                        <span class="badge bg-warning text-dark">fuego</span>
-                        <span class="badge bg-warning text-dark">volador</span>
-                    </div>
-
-                    <div class="card-footer d-grid gap-2 d-md-flex d-sm-flex justify-content-md-end justify-content-sm-end">
-
-                        <form action="#">
-                            <input id="inputHidden" name="inputHidden" type="hidden" value="I'm hidden">
-                            <button type="submit" class="btn btn-outline-danger">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                        </form>
-
-                        <form action="#">
-                            <input id="inputHidden" name="inputHidden" type="hidden" value="I'm hidden">
-                            <button type="submit" class="btn btn-outline-primary">
-                                <i class="far fa-edit"></i>
-                            </button>
-                        </form>
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card h-100 border border-secondary p-0 m-2">
-                    <img src="../media/pokemon/007.png" class="card-img-top img-fluid" alt="...">
-                    <div class="card-body">
-                        <p class="card-text fw-bold">007 - Squirtle</p>
-
-                        <span class="badge bg-warning text-dark">agua</span>
-                    </div>
-
-                    <div class="card-footer d-grid gap-2 d-md-flex d-sm-flex justify-content-md-end justify-content-sm-end">
-
-                        <form action="#">
-                            <input id="inputHidden" name="inputHidden" type="hidden" value="I'm hidden">
-                            <button type="submit" class="btn btn-outline-danger">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                        </form>
-
-                        <form action="#">
-                            <input id="inputHidden" name="inputHidden" type="hidden" value="I'm hidden">
-                            <button type="submit" class="btn btn-outline-primary">
-                                <i class="far fa-edit"></i>
-                            </button>
-                        </form>
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card h-100 border border-secondary p-0 m-2">
-                    <img src="../media/pokemon/008.png" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <p class="card-text fw-bold">008 - Wartortle</p>
-
-                        <span class="badge bg-warning text-dark">agua</span>
-                    </div>
-
-                    <div class="card-footer d-grid gap-2 d-md-flex d-sm-flex justify-content-md-end justify-content-sm-end">
-
-                        <form action="#">
-                            <input id="inputHidden" name="inputHidden" type="hidden" value="I'm hidden">
-                            <button type="submit" class="btn btn-outline-danger">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                        </form>
-
-                        <form action="#">
-                            <input id="inputHidden" name="inputHidden" type="hidden" value="I'm hidden">
-                            <button type="submit" class="btn btn-outline-primary">
-                                <i class="far fa-edit"></i>
-                            </button>
-                        </form>
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card h-100 border border-secondary p-0 m-2">
-                    <img src="../media/pokemon/009.png" class="card-img-top img-fluid" alt="...">
-                    <div class="card-body">
-                        <p class="card-text fw-bold">009 - Blastoise</p>
-
-                        <span class="badge bg-warning text-dark">agua</span>
-                    </div>
-
-                    <div class="card-footer d-grid gap-2 d-md-flex d-sm-flex justify-content-md-end justify-content-sm-end">
-
-                        <form action="#">
-                            <input id="inputHidden" name="inputHidden" type="hidden" value="I'm hidden">
-                            <button type="submit" class="btn btn-outline-danger">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                        </form>
-
-                        <form action="#">
-                            <input id="inputHidden" name="inputHidden" type="hidden" value="I'm hidden">
-                            <button type="submit" class="btn btn-outline-primary">
-                                <i class="far fa-edit"></i>
-                            </button>
-                        </form>
-
-                    </div>
-                </div>
-            </div>
+            </div>';
+                    }
+                    //unset($_SESSION['pokedex']);
+                } else {
+                    $pokedex = [];
+                }
+            }
+            ?>
         </div>
 
         <a class="position-relative" href="/Cristine_Marquez_Pokemon/php_views/pokemon.php">

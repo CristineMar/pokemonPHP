@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
   <title>Document</title>
 </head>
+
 <body style="
 background-image: url(/Cristine_Marquez_Pokemon/media/Pokedex.png); 
 background-size: cover; 
@@ -13,41 +18,11 @@ background-repeat:no-repeat;
 background-position: center; 
 background-attachment: fixed;">
 
-<?php
-require __DIR__ . "/php_librarys/pokedex.php";
-include __DIR__ . "/php_partials/menu.php";
+  <?php
+  //require __DIR__ . "/php_librarys/pokedex.php";
+  include __DIR__ . "/php_partials/menu.php";
+  ?>
 
-//empty pokedex
-$pokedex = [];
-
-//create pokemon
-$pokemon = createPokemon(001, "Bulbasaur", "Hoen", ["Planta", "Veneno"], 70, 6.9, "Sense evolucionar", "001.png");
-//adding pokemon to pokedex
-addPokemon($pokedex, $pokemon);
-
-$pokemon = createPokemon(002, "Ivysaur", "Hoen", ["Planta", "Veneno"], 100, 13, "Primera evolució", "002.png");
-addPokemon($pokedex, $pokemon);
-
-$pokemon = createPokemon(004, "Charmander", "Jotho", ["Fuego"], 60, 8.5, "Sense evolucionar", "003.png");
-addPokemon($pokedex, $pokemon);
-
-$pokemon = createPokemon(001, "Bulbasaur", "Hoen", ["Planta", "Veneno"], 70, 6.9, "Sense evolucionar", "001.png");
-//adding pokemon to pokedex
-addPokemon($pokedex, $pokemon);
-
-showPokedex($pokedex);
-$deleted = deletePokemonNum($pokedex, 2);
-
-//var_dump(deletePokemonNum($pokedex, 2));
-
-if($deleted == "1") {
-  echo "Eliminado correctamente" . '<br>';
-} else {
-  echo "No existe este pokemon por lo tanto no se puede eliminar" . '<br>';
-}
-
-showPokedex($pokedex);
-
-?>
 </body>
+
 </html>
